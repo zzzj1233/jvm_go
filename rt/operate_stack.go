@@ -72,3 +72,17 @@ func (this *OperateStack) PopObj() *Object {
 	this.slots[this.size].obj = nil
 	return obj
 }
+
+func (this *OperateStack) TopSlot() Slot {
+	return this.slots[this.size-1]
+}
+
+func (this *OperateStack) PushSlot(slot Slot) {
+	this.slots[this.size] = slot
+	this.size++
+}
+
+func (this *OperateStack) PopSlot() Slot {
+	this.size--
+	return this.slots[this.size]
+}
