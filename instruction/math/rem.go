@@ -42,7 +42,7 @@ func (this *IRem) Execute(frame *rt.StackFrame) {
 }
 
 type LRem struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *LRem) Execute(frame *rt.StackFrame) {

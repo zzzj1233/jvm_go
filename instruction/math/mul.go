@@ -4,7 +4,7 @@ import "../base"
 import "../../rt"
 
 type DMul struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *DMul) Execute(frame *rt.StackFrame) {
@@ -12,7 +12,7 @@ func (this *DMul) Execute(frame *rt.StackFrame) {
 }
 
 type FMul struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *FMul) Execute(frame *rt.StackFrame) {
@@ -20,7 +20,7 @@ func (this *FMul) Execute(frame *rt.StackFrame) {
 }
 
 type IMul struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *IMul) Execute(frame *rt.StackFrame) {
@@ -28,7 +28,7 @@ func (this *IMul) Execute(frame *rt.StackFrame) {
 }
 
 type LMul struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *LMul) Execute(frame *rt.StackFrame) {

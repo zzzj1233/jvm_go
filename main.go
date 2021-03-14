@@ -10,7 +10,6 @@ import (
 )
 
 func main() {
-
 	c := parseCommand()
 
 	if c.printVersion {

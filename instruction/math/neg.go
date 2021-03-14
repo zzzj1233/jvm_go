@@ -5,7 +5,7 @@ import "../base"
 import "../../rt"
 
 type DNeg struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *DNeg) Execute(frame *rt.StackFrame) {
@@ -13,7 +13,7 @@ func (this *DNeg) Execute(frame *rt.StackFrame) {
 }
 
 type FNeg struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *FNeg) Execute(frame *rt.StackFrame) {
@@ -21,7 +21,7 @@ func (this *FNeg) Execute(frame *rt.StackFrame) {
 }
 
 type INeg struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *INeg) Execute(frame *rt.StackFrame) {
@@ -29,7 +29,7 @@ func (this *INeg) Execute(frame *rt.StackFrame) {
 }
 
 type LNeg struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *LNeg) Execute(frame *rt.StackFrame) {

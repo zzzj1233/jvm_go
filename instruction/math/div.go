@@ -4,7 +4,7 @@ import "../base"
 import "../../rt"
 
 type DDiv struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *DDiv) Execute(frame *rt.StackFrame) {
@@ -15,7 +15,7 @@ func (this *DDiv) Execute(frame *rt.StackFrame) {
 }
 
 type FDiv struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *FDiv) Execute(frame *rt.StackFrame) {
@@ -26,7 +26,7 @@ func (this *FDiv) Execute(frame *rt.StackFrame) {
 }
 
 type IDiv struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *IDiv) Execute(frame *rt.StackFrame) {
@@ -37,7 +37,7 @@ func (this *IDiv) Execute(frame *rt.StackFrame) {
 }
 
 type LDiv struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *LDiv) Execute(frame *rt.StackFrame) {

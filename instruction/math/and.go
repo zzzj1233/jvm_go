@@ -4,7 +4,7 @@ import "../base"
 import "../../rt"
 
 type IAnd struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *IAnd) Execute(frame *rt.StackFrame) {
@@ -16,7 +16,7 @@ func (this *IAnd) Execute(frame *rt.StackFrame) {
 }
 
 type LAnd struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *LAnd) Execute(frame *rt.StackFrame) {

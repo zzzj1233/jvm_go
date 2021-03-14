@@ -6,7 +6,7 @@ import "../base"
 import "../../rt"
 
 type IXor struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *IXor) Execute(frame *rt.StackFrame) {
@@ -17,7 +17,7 @@ func (this *IXor) Execute(frame *rt.StackFrame) {
 }
 
 type LXor struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *LXor) Execute(frame *rt.StackFrame) {
