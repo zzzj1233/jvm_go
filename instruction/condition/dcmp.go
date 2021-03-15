@@ -27,7 +27,7 @@ func (this *DCmpL) Execute(frame *rt.StackFrame) {
 }
 
 type DCmpG struct {
-	base.NopInstruction
+	base.NoOperandsInstruction
 }
 
 func (this *DCmpG) Execute(frame *rt.StackFrame) {

@@ -1,6 +1,5 @@
 package instruction
 
-import "../rt"
 import "./base"
 import "./constant"
 import "./push"
@@ -226,6 +225,8 @@ func NewInstruction(instructionCode uint8) base.Instruction {
 		return &condition.IfGt{}
 	case 0x9e:
 		return &condition.IfLe{}
+	case 0xa7:
+		return &condition.Goto{}
 	case 0x59:
 		return &dup.Dup{}
 	case 0x5a:
@@ -317,28 +318,5 @@ func NewInstruction(instructionCode uint8) base.Instruction {
 	case 0x58:
 		return &pop.Pop2{}
 	}
-
-	return nil
-}
-
-func Loop(reader *base.BytecodeReader, frame *rt.StackFrame) {
-	var instr base.Instruction
-
-	for {
-		instructionCode := reader.ReadUInt8()
-
-		instr = NewInstruction(instructionCode)
-
-		_, ok := instr.(*base.NopInstruction)
-
-		if ok {
-			return
-		}
-
-		instr.FetchOperands(reader)
-
-		instr.Execute(frame)
-
-	}
-
+	return &base.NopInstruction{}
 }

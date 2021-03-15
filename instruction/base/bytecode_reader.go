@@ -27,7 +27,7 @@ func (this *BytecodeReader) ReadUInt16() uint16 {
 }
 
 func (this *BytecodeReader) ReadInt16() int16 {
-	return int16(this.ReadUInt16())
+	return int16(int16(this.ReadInt8()<<8) | int16(this.ReadInt8()))
 }
 
 func (this *BytecodeReader) ReadUInt32() uint32 {
@@ -46,4 +46,8 @@ func (this *BytecodeReader) ReadInt32() int32 {
 	byte4 := int32(this.ReadUInt8())
 
 	return (byte1 << 24) | (byte2 << 16) | (byte3 << 8) | byte4
+}
+
+func (this *BytecodeReader) SetNextPc(pc uint) {
+	this.pc += pc
 }

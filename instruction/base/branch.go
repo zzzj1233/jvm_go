@@ -3,13 +3,14 @@ package base
 import "../../rt"
 
 type BranchInstruction struct {
-	Offset uint16
+	Offset int16
 }
 
 func (this *BranchInstruction) FetchOperands(reader *BytecodeReader) {
-	this.Offset = reader.ReadUInt16()
+	this.Offset = reader.ReadInt16()
 }
 
 func (this *BranchInstruction) MatchCondition(frame *rt.StackFrame) {
-	frame.NextPc = int(this.Offset)
+	// 减去一个指令 + 两个操作数的长度
+	frame.NextPc = int(this.Offset) - 3
 }

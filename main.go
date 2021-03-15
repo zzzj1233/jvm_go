@@ -3,9 +3,6 @@ package main
 import (
 	"./classfile"
 	"./classpath"
-	"./instruction"
-	"./instruction/base"
-	"./rt"
 	"strings"
 )
 
@@ -57,14 +54,8 @@ func startJvm(c *Cmd) {
 	cf := classfile.Parse(bytes)
 
 	for _, method := range cf.Methods {
-		for _, attr := range method.Attributes {
-			codeAttribute := attr.(*classfile.CodeAttribute)
-
-			if method.GetName() == "test" {
-				reader := base.NewBytecodeReader(0, codeAttribute.GetCode())
-				frame := rt.NewStackFrame(rt.NewLocalVarTable(codeAttribute.MaxLocals), rt.NewOperateStack(codeAttribute.MaxStack))
-				instruction.Loop(reader, frame)
-			}
+		if method.GetName() == "main" {
+			Interpret(method)
 		}
 
 	}

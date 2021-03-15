@@ -72,7 +72,7 @@ func (this *IcmpGt) Execute(frame *rt.StackFrame) {
 	int1 := stack.PopInt()
 	int2 := stack.PopInt()
 
-	if int1 > int2 {
+	if int2 > int1 {
 		this.MatchCondition(frame)
 	}
 
@@ -87,7 +87,7 @@ func (this *IcmpGe) Execute(frame *rt.StackFrame) {
 	int1 := stack.PopInt()
 	int2 := stack.PopInt()
 
-	if int1 >= int2 {
+	if int2 >= int1 {
 		this.MatchCondition(frame)
 	}
 
