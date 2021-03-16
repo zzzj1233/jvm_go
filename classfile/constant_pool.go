@@ -17,16 +17,16 @@ func (this ConstantPool) getNameAndTypeInfo(idx uint16) *ConstantNameType {
 func readConstantPool(reader *ClassReader) ConstantPool {
 	poolSize := reader.readUInt16()
 
-	pool := make([]ConstantInfo, 0, poolSize)
+	var pool ConstantPool = make([]ConstantInfo, poolSize)
 
 	for i := 1; i < int(poolSize); i++ {
 		info := ReadConstantInfo(reader, pool)
-		pool = append(pool, info)
+		// pool = append(pool, info)
+		pool[i-1] = info
 		switch info.(type) {
 		case *ConstantLongInfo, *ConstantDoubleInfo:
 			i++
 		}
 	}
-
 	return pool
 }

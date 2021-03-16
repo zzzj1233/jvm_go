@@ -43,3 +43,37 @@ func Test2(t *testing.T) {
 	a := 1065353216
 	println(math.Float32frombits(uint32(a)))
 }
+
+type Holder struct {
+	items []int
+}
+
+func Test3(t *testing.T) {
+	items := make([]int, 0, 5)
+
+	items = append(items, -1)
+	items = append(items, 0)
+
+	h := &Holder{items: items}
+
+	items = append(items, 1)
+	items = append(items, 2)
+	items = append(items, 3)
+
+	fmt.Println(h.items)
+}
+
+func Test4(t *testing.T) {
+	items := make([]int, 0, 2)
+
+	fmt.Println(items)
+
+	_ = append(items, -1)
+	_ = append(items, 0)
+
+	fmt.Println(items)
+
+	items = append(items, 1)
+
+	fmt.Println(items)
+}

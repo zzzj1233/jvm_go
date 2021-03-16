@@ -5,9 +5,14 @@ type ConstantClassInfo struct {
 	pool         ConstantPool
 }
 
+func newConstantClassInfo(pool ConstantPool) *ConstantClassInfo {
+	return &ConstantClassInfo{
+		pool: pool,
+	}
+}
+
 func (this *ConstantClassInfo) readInfo(reader *ClassReader, cp ConstantPool) {
 	this.classNameIdx = reader.readUInt16()
-	this.pool = cp
 }
 
 func (this *ConstantClassInfo) getClassName() string {

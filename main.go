@@ -3,6 +3,7 @@ package main
 import (
 	"./classfile"
 	"./classpath"
+	"./methodarea"
 	"strings"
 )
 
@@ -53,10 +54,5 @@ func startJvm(c *Cmd) {
 
 	cf := classfile.Parse(bytes)
 
-	for _, method := range cf.Methods {
-		if method.GetName() == "main" {
-			Interpret(method)
-		}
-
-	}
+	methodarea.NewClass(cf)
 }

@@ -8,7 +8,7 @@ type ConstantInfo interface {
 	readInfo(reader *ClassReader, cp ConstantPool)
 }
 
-func newConstantInfo(tag uint8) ConstantInfo {
+func newConstantInfo(tag uint8, cp ConstantPool) ConstantInfo {
 	switch tag {
 
 	case 1:
@@ -22,7 +22,7 @@ func newConstantInfo(tag uint8) ConstantInfo {
 	case 6:
 		return &ConstantDoubleInfo{}
 	case 7:
-		return &ConstantClassInfo{}
+		return newConstantClassInfo(cp)
 	case 8:
 		return &ConstantStrInfo{}
 	case 9:
@@ -46,7 +46,7 @@ func newConstantInfo(tag uint8) ConstantInfo {
 
 func ReadConstantInfo(reader *ClassReader, cp ConstantPool) ConstantInfo {
 	tag := reader.readUInt8()
-	info := newConstantInfo(tag)
+	info := newConstantInfo(tag, cp)
 	info.readInfo(reader, cp)
 	return info
 }

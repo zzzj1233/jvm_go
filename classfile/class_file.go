@@ -37,6 +37,10 @@ func (this *ClassFile) read(reader *ClassReader) {
 	this.Attributes = readAttributes(reader, this.Pool)
 }
 
+func (this *ClassFile) GetClassName() string {
+	return this.Pool.getClassInfo(this.ThisClass).getClassName()
+}
+
 func (this *ClassFile) readAndCheckMagic(reader *ClassReader) {
 	magic := reader.readUInt32()
 	if magic != 0xCAFEBABE {
