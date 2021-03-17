@@ -1,5 +1,9 @@
 package methodarea
 
+import (
+	"../classfile"
+)
+
 type MethodFlag struct {
 	*ClassMemberFlag
 	synchronized bool
@@ -22,10 +26,51 @@ func newMethodFlag(flag int) *MethodFlag {
 	}
 }
 
+func newMethods(cf *classfile.ClassFile, class *Class) []*Method {
+	methods := make([]*Method, len(cf.Methods))
+
+	for i, method := range cf.Methods {
+		methods[i] = newMethod(method, class)
+	}
+
+	return methods
+}
+
+func newMethod(memberInfo *classfile.MemberInfo, class *Class) *Method {
+
+	var maxStack uint16
+	var maxLocals uint16
+	var code []byte
+
+	for _, attr := range memberInfo.Attributes {
+
+		codeAttr, ok := attr.(*classfile.CodeAttribute)
+
+		if ok {
+			maxStack = codeAttr.MaxStack
+			maxLocals = codeAttr.MaxLocals
+			code = codeAttr.Code
+		}
+
+	}
+
+	return &Method{
+		ClassMember: ClassMember{
+			Name:       memberInfo.GetName(),
+			Descriptor: memberInfo.GetDesc(),
+			Class:      class,
+		},
+		flag:      newMethodFlag(int(memberInfo.AccessFlag)),
+		maxStack:  maxStack,
+		maxLocals: maxLocals,
+		code:      code,
+	}
+}
+
 type Method struct {
 	ClassMember
 	flag      *MethodFlag
-	maxStack  int
-	maxLocals int
+	maxStack  uint16
+	maxLocals uint16
 	code      []byte
 }

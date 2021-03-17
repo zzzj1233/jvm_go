@@ -2,34 +2,55 @@ package methodarea
 
 import (
 	"../classfile"
-	"fmt"
 )
 
 type Class struct {
 	flag            *ClassFlag
 	className       string
 	superClassName  string
-	interfacesNames string
-	fields          []Field
-	methods         []Method
+	interfacesNames []string
+	fields          []*Field
+	methods         []*Method
 	superClass      *Class
 	interfaces      []*Class
 	classLoader     *ClassLoader
 }
 
-func NewClass(cf *classfile.ClassFile) *Class {
-	fmt.Println(cf.GetClassName())
-	return &Class{
+func NewClass(cf *classfile.ClassFile, classLoader *ClassLoader) *Class {
+	className := cf.GetClassName()
+	superClassName := cf.GetSuperClassName()
+	interfaceNames := cf.GetInterfaceNames()
+
+	var superClass *Class = nil
+
+	// 加载父类
+	if className != "java/lang/Object" && superClassName != "" {
+		superClass = classLoader.LoadClass(superClassName)
+	}
+
+	var interfaces = make([]*Class, len(cf.Interfaces))
+
+	// 加载接口
+	for idx, name := range interfaceNames {
+		interfaces[idx] = classLoader.LoadClass(name)
+	}
+
+	clazz := &Class{
 		flag:            newClassFlag(int(cf.AccessFlag)),
-		className:       cf.GetClassName(),
-		superClassName:  "",
-		interfacesNames: "",
+		className:       className,
+		superClassName:  superClassName,
+		interfacesNames: interfaceNames,
 		fields:          nil,
 		methods:         nil,
-		superClass:      nil,
-		interfaces:      nil,
-		classLoader:     nil,
+		superClass:      superClass,
+		interfaces:      interfaces,
+		classLoader:     classLoader,
 	}
+
+	clazz.methods = newMethods(cf, clazz)
+	clazz.fields = newFields(cf, clazz)
+
+	return clazz
 }
 
 type ClassFlag struct {

@@ -1,5 +1,9 @@
 package methodarea
 
+import (
+	"../classfile"
+)
+
 type ClassMemberFlag struct {
 	public    bool
 	private   bool
@@ -66,13 +70,36 @@ func (this *FieldFlag) IsEnum() bool {
 	return this.enum
 }
 
+func newFields(cf *classfile.ClassFile, class *Class) []*Field {
+	fields := make([]*Field, len(cf.Fields))
+
+	for i, field := range cf.Fields {
+		fields[i] = newField(field, class)
+	}
+
+	return fields
+}
+
+func newField(memberInfo *classfile.MemberInfo, class *Class) *Field {
+	return &Field{
+		ClassMember: ClassMember{
+			Name:       memberInfo.GetName(),
+			Descriptor: memberInfo.GetDesc(),
+			Class:      class,
+		},
+		flag:            newFieldFlag(int(memberInfo.AccessFlag)),
+		FieldDescriptor: newDescriptor(memberInfo.GetDesc()),
+	}
+}
+
 type ClassMember struct {
-	name       string
-	descriptor string
-	class      *Class
+	Name       string
+	Descriptor string
+	Class      *Class
 }
 
 type Field struct {
 	ClassMember
-	flag *FieldFlag
+	flag            *FieldFlag
+	FieldDescriptor *Descriptor
 }

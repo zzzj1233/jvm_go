@@ -41,6 +41,24 @@ func (this *ClassFile) GetClassName() string {
 	return this.Pool.getClassInfo(this.ThisClass).getClassName()
 }
 
+func (this *ClassFile) GetSuperClassName() string {
+	if this.SuperClass == 0 {
+		return ""
+	}
+
+	return this.Pool.getClassInfo(this.SuperClass).getClassName()
+}
+
+func (this *ClassFile) GetInterfaceNames() []string {
+	names := make([]string, len(this.Interfaces))
+
+	for idx, item := range this.Interfaces {
+		names[idx] = this.Pool.getClassInfo(item).getClassName()
+	}
+
+	return names
+}
+
 func (this *ClassFile) readAndCheckMagic(reader *ClassReader) {
 	magic := reader.readUInt32()
 	if magic != 0xCAFEBABE {
