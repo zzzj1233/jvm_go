@@ -21,6 +21,20 @@ func TestZip(t *testing.T) {
 
 }
 
+func TestRt(t *testing.T) {
+	path := "D:\\java\\jdk\\jre\\lib\\rt.jar"
+
+	p := "java/lang/Object.class"
+
+	reader, _ := zip.OpenReader(path)
+
+	for _, f := range reader.Reader.File {
+		if f.Name == p {
+			fmt.Println("find ~")
+		}
+	}
+}
+
 func TestPath(t *testing.T) {
 
 	const path = "../img*"

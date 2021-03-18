@@ -38,7 +38,9 @@ func (entry *ZipEntry) ReadClass(classFile string) ([]byte, Entry, error) {
 	defer reader.Close()
 
 	for _, file := range reader.File {
+
 		if file.Name == classFile {
+
 			f, err := file.Open()
 
 			if err != nil {

@@ -87,7 +87,7 @@ func newField(memberInfo *classfile.MemberInfo, class *Class) *Field {
 			Descriptor: memberInfo.GetDesc(),
 			Class:      class,
 		},
-		flag:            newFieldFlag(int(memberInfo.AccessFlag)),
+		Flag:            newFieldFlag(int(memberInfo.AccessFlag)),
 		FieldDescriptor: newDescriptor(memberInfo.GetDesc()),
 	}
 }
@@ -100,6 +100,6 @@ type ClassMember struct {
 
 type Field struct {
 	ClassMember
-	flag            *FieldFlag
+	Flag            *FieldFlag
 	FieldDescriptor *Descriptor
 }

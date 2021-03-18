@@ -24,11 +24,11 @@ func (this *ConstantMemberInfo) readInfo(reader *ClassReader, cp ConstantPool) {
 	this.pool = cp
 }
 
-func (this *ConstantMemberInfo) getClassName() string {
+func (this *ConstantMemberInfo) GetClassName() string {
 	return this.pool.getClassInfo(this.classIndex).getClassName()
 }
 
-func (this *ConstantMemberInfo) getNameAndType() (string, string) {
+func (this *ConstantMemberInfo) GetNameAndType() (string, string) {
 	info := this.pool.getNameAndTypeInfo(this.nameAndTypeIndex)
 	return info.GetName(), info.GetDesc()
 }

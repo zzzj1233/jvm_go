@@ -26,16 +26,40 @@ func (this *ClassLoader) LoadClass(name string) *Class {
 	}
 
 	// 加载
-	class = this.defineClass(name)
+	defineClass, cf := this.defineClass(name)
 
-	this.classPool[name] = class
+	this.classPool[name] = defineClass
 
 	// 验证
 	// verify(Class)
 
-	// 初始化
+	// 初始化,执行static代码块,初始化静态变量
+	prepare(defineClass, cf)
 
-	return class
+	return defineClass
+}
+
+func prepare(class *Class, cf *classfile.ClassFile) {
+	staticAttributeMap := make(map[int]*Attribute, 4)
+
+	for _, field := range class.fields {
+		if field.Flag.IsStatic() {
+			fieldName := field.Name
+
+			for idx, poolItem := range cf.Pool {
+				refInfo, ok := poolItem.(*classfile.ConstantFieldRefInfo)
+				if ok {
+					name, desc := refInfo.GetNameAndType()
+					if fieldName == name {
+						staticAttributeMap[idx] = NewAttribute(desc)
+					}
+				}
+			}
+
+		}
+	}
+
+	class.StaticAttributes = staticAttributeMap
 }
 
 func (this *ClassLoader) readClass(classFileName string) []byte {
@@ -63,12 +87,12 @@ func (this *ClassLoader) readClass(classFileName string) []byte {
 	panic("read file error , can not find the file : " + classFileName)
 }
 
-func (this *ClassLoader) defineClass(className string) *Class {
-	classFileName := strings.ReplaceAll(className, ".", "/") + ".Class"
+func (this *ClassLoader) defineClass(className string) (*Class, *classfile.ClassFile) {
+	classFileName := strings.ReplaceAll(className, ".", "/") + ".class"
 
 	classData := this.readClass(classFileName)
 
 	cf := classfile.Parse(classData)
 
-	return NewClass(cf, this)
+	return NewClass(cf, this), cf
 }

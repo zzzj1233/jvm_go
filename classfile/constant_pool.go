@@ -2,6 +2,10 @@ package classfile
 
 type ConstantPool []ConstantInfo
 
+type ExtensionConstantPool struct {
+	ConstantPool
+}
+
 func (this ConstantPool) getUtf8(idx uint16) string {
 	return this[idx-1].(*ConstantUtf8Info).str
 }

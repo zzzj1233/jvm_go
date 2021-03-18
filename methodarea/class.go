@@ -5,15 +5,20 @@ import (
 )
 
 type Class struct {
-	flag            *ClassFlag
-	className       string
-	superClassName  string
-	interfacesNames []string
-	fields          []*Field
-	methods         []*Method
-	superClass      *Class
-	interfaces      []*Class
-	classLoader     *ClassLoader
+	flag             *ClassFlag
+	className        string
+	superClassName   string
+	interfacesNames  []string
+	fields           []*Field
+	methods          []*Method
+	superClass       *Class
+	interfaces       []*Class
+	classLoader      *ClassLoader
+	StaticAttributes map[int]*Attribute
+}
+
+func (this *Class) GetFields() []*Field {
+	return this.fields
 }
 
 func NewClass(cf *classfile.ClassFile, classLoader *ClassLoader) *Class {
