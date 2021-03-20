@@ -40,26 +40,20 @@ func (this *ClassLoader) LoadClass(name string) *Class {
 }
 
 func prepare(class *Class, cf *classfile.ClassFile) {
-	staticAttributeMap := make(map[int]*Attribute, 4)
+	staticAttributeMap := make(map[string]*Attribute, 4)
+	instanceAttributeMap := make(map[string]*Field, 16)
 
 	for _, field := range class.fields {
+
 		if field.Flag.IsStatic() {
-			fieldName := field.Name
-
-			for idx, poolItem := range cf.Pool {
-				refInfo, ok := poolItem.(*classfile.ConstantFieldRefInfo)
-				if ok {
-					name, desc := refInfo.GetNameAndType()
-					if fieldName == name {
-						staticAttributeMap[idx] = NewAttribute(desc)
-					}
-				}
-			}
-
+			staticAttributeMap[field.Name] = NewAttribute(field)
+		} else {
+			instanceAttributeMap[field.Name] = field
 		}
 	}
 
 	class.StaticAttributes = staticAttributeMap
+	class.InstanceFieldMap = instanceAttributeMap
 }
 
 func (this *ClassLoader) readClass(classFileName string) []byte {

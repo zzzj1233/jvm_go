@@ -2,14 +2,13 @@ package instruction
 
 import "./base"
 import "./constant"
-import "./push"
-import "./store"
 import "./load"
 import "./cast"
 import "./condition"
 import "./dup"
 import "./math"
-import "./pop"
+import "./stack"
+import "./object"
 
 func NewInstruction(instructionCode uint8) base.Instruction {
 	switch instructionCode {
@@ -46,9 +45,9 @@ func NewInstruction(instructionCode uint8) base.Instruction {
 		return &constant.LConst1{}
 	// push
 	case 0x10:
-		return &push.BiPush{}
+		return &stack.BiPush{}
 	case 0x11:
-		return &push.SiPush{}
+		return &stack.SiPush{}
 	// load
 	case 0x19:
 		return &load.ALoad{}
@@ -102,55 +101,55 @@ func NewInstruction(instructionCode uint8) base.Instruction {
 		return &load.LLoad3{}
 	// store
 	case 0x3a:
-		return &store.AStore{}
+		return &stack.AStore{}
 	case 0x4b:
-		return &store.AStore0{}
+		return &stack.AStore0{}
 	case 0x4c:
-		return &store.AStore1{}
+		return &stack.AStore1{}
 	case 0x4d:
-		return &store.AStore2{}
+		return &stack.AStore2{}
 	case 0x4e:
-		return &store.AStore3{}
+		return &stack.AStore3{}
 	case 0x39:
-		return &store.DStore{}
+		return &stack.DStore{}
 	case 0x47:
-		return &store.DStore0{}
+		return &stack.DStore0{}
 	case 0x48:
-		return &store.DStore1{}
+		return &stack.DStore1{}
 	case 0x49:
-		return &store.DStore2{}
+		return &stack.DStore2{}
 	case 0x4a:
-		return &store.DStore3{}
+		return &stack.DStore3{}
 	case 0x38:
-		return &store.FStore{}
+		return &stack.FStore{}
 	case 0x43:
-		return &store.FStore0{}
+		return &stack.FStore0{}
 	case 0x44:
-		return &store.FStore1{}
+		return &stack.FStore1{}
 	case 0x45:
-		return &store.FStore2{}
+		return &stack.FStore2{}
 	case 0x46:
-		return &store.FStore3{}
+		return &stack.FStore3{}
 	case 0x36:
-		return &store.IStore{}
+		return &stack.IStore{}
 	case 0x3b:
-		return &store.IStore0{}
+		return &stack.IStore0{}
 	case 0x3c:
-		return &store.IStore1{}
+		return &stack.IStore1{}
 	case 0x3d:
-		return &store.IStore2{}
+		return &stack.IStore2{}
 	case 0x3e:
-		return &store.IStore3{}
+		return &stack.IStore3{}
 	case 0x37:
-		return &store.LStore{}
+		return &stack.LStore{}
 	case 0x3f:
-		return &store.LStore0{}
+		return &stack.LStore0{}
 	case 0x40:
-		return &store.LStore1{}
+		return &stack.LStore1{}
 	case 0x41:
-		return &store.LStore2{}
+		return &stack.LStore2{}
 	case 0x42:
-		return &store.LStore3{}
+		return &stack.LStore3{}
 	case 0xb1:
 		return &base.NopInstruction{}
 	case 0x90:
@@ -314,9 +313,31 @@ func NewInstruction(instructionCode uint8) base.Instruction {
 	case 0x83:
 		return &math.LXor{}
 	case 0x57:
-		return &pop.Pop{}
+		return &stack.Pop{}
 	case 0x58:
-		return &pop.Pop2{}
+		return &stack.Pop2{}
+	case 0xbb:
+		return &object.New{}
+	case 0xb2:
+		return &object.GetStatic{}
+	case 0xb3:
+		return &object.PutStatic{}
+	case 0xb4:
+		return &object.GetField{}
+	case 0xb5:
+		return &object.PutField{}
+	case 0xb7:
+		return &object.InvokeSpecial{}
+	case 0xc1:
+		return &object.Instanceof{}
+	case 0xc0:
+		return &object.CheckCast{}
+	case 0x12:
+		return &stack.Ldc{}
+	case 0x13:
+		return &stack.LdcW{}
+	case 0x14:
+		return &stack.Ldc2W{}
 	}
 	return &base.NopInstruction{}
 }

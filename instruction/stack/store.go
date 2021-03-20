@@ -1,4 +1,4 @@
-package store
+package stack
 
 import "../base"
 import "../../rt"

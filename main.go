@@ -2,9 +2,8 @@ package main
 
 import (
 	"./classpath"
+	"./context"
 	"./methodarea"
-	"./rt"
-	"fmt"
 )
 
 func main() {
@@ -22,11 +21,12 @@ func main() {
 
 func startJvm(c *Cmd) {
 	cp := classpath.Parse(c.jreOptions, c.cpOptions)
-	loader := methodarea.NewClassLoader(cp)
 
-	class := loader.LoadClass(c.classname)
+	context.Loader = methodarea.NewClassLoader(cp)
 
-	object := rt.NewObject(class)
+	class := context.Loader.LoadClass(c.classname)
 
-	fmt.Println(object.Attributes)
+	method := class.GetMainMethod()
+
+	Interpret(method)
 }

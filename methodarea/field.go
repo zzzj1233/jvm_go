@@ -88,7 +88,7 @@ func newField(memberInfo *classfile.MemberInfo, class *Class) *Field {
 			Class:      class,
 		},
 		Flag:            newFieldFlag(int(memberInfo.AccessFlag)),
-		FieldDescriptor: newDescriptor(memberInfo.GetDesc()),
+		FieldDescriptor: NewDescriptor(memberInfo.GetDesc()),
 	}
 }
 

@@ -13,11 +13,12 @@ type Descriptor struct {
 	IsLong      bool
 	IsReference bool
 	IsArray     bool
+	desc        string
 }
 
 func (this *Descriptor) DefaultValue() interface{} {
 	if this.IsInt {
-		return 0
+		return int32(0)
 	}
 	if this.IsByte {
 		return int8(0)
@@ -49,7 +50,7 @@ func (this *Descriptor) DefaultValue() interface{} {
 	panic("unknown descriptor")
 }
 
-func newDescriptor(descriptor string) *Descriptor {
+func NewDescriptor(descriptor string) *Descriptor {
 	var isInt bool
 	var isByte bool
 	var isChar bool
@@ -94,5 +95,6 @@ func newDescriptor(descriptor string) *Descriptor {
 		IsLong:      isLong,
 		IsReference: isReference,
 		IsArray:     isArray,
+		desc:        descriptor,
 	}
 }

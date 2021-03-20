@@ -1,4 +1,4 @@
-package push
+package stack
 
 import "../base"
 import "../../rt"

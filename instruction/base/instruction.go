@@ -17,8 +17,7 @@ func (this *NopInstruction) Execute(frame *rt.StackFrame) {
 	// no op
 }
 
-type NoOperandsInstruction struct{
-
+type NoOperandsInstruction struct {
 }
 
 // 不需要读取操作数
@@ -34,5 +33,10 @@ func (this *Index8Instruction) FetchOperands(reader *BytecodeReader) {
 	this.Index = int(reader.ReadInt8())
 }
 
+type Index16Instruction struct {
+	Index int16
+}
 
-
+func (this *Index16Instruction) FetchOperands(reader *BytecodeReader) {
+	this.Index = int16(reader.ReadUInt8())<<8 | int16(reader.ReadUInt8())
+}

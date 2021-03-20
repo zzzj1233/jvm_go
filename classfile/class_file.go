@@ -38,7 +38,7 @@ func (this *ClassFile) read(reader *ClassReader) {
 }
 
 func (this *ClassFile) GetClassName() string {
-	return this.Pool.getClassInfo(this.ThisClass).getClassName()
+	return this.Pool.GetClassInfo(this.ThisClass).GetClassName()
 }
 
 func (this *ClassFile) GetSuperClassName() string {
@@ -46,14 +46,14 @@ func (this *ClassFile) GetSuperClassName() string {
 		return ""
 	}
 
-	return this.Pool.getClassInfo(this.SuperClass).getClassName()
+	return this.Pool.GetClassInfo(this.SuperClass).GetClassName()
 }
 
 func (this *ClassFile) GetInterfaceNames() []string {
 	names := make([]string, len(this.Interfaces))
 
 	for idx, item := range this.Interfaces {
-		names[idx] = this.Pool.getClassInfo(item).getClassName()
+		names[idx] = this.Pool.GetClassInfo(item).GetClassName()
 	}
 
 	return names

@@ -67,7 +67,7 @@ func (this *OperateStack) PushObj(obj *Object) {
 }
 
 func (this *OperateStack) PopObj() *Object {
-	obj := this.slots[this.size].obj
+	obj := this.slots[this.size-1].obj
 	this.size--
 	this.slots[this.size].obj = nil
 	return obj

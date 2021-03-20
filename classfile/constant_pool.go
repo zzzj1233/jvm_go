@@ -10,12 +10,16 @@ func (this ConstantPool) getUtf8(idx uint16) string {
 	return this[idx-1].(*ConstantUtf8Info).str
 }
 
-func (this ConstantPool) getClassInfo(idx uint16) *ConstantClassInfo {
+func (this ConstantPool) GetClassInfo(idx uint16) *ConstantClassInfo {
 	return this[idx-1].(*ConstantClassInfo)
 }
 
 func (this ConstantPool) getNameAndTypeInfo(idx uint16) *ConstantNameType {
 	return this[idx-1].(*ConstantNameType)
+}
+
+func (this ConstantPool) GetFieldRef(idx uint16) *ConstantFieldRefInfo {
+	return this[idx-1].(*ConstantFieldRefInfo)
 }
 
 func readConstantPool(reader *ClassReader) ConstantPool {

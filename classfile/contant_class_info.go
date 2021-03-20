@@ -15,6 +15,6 @@ func (this *ConstantClassInfo) readInfo(reader *ClassReader, cp ConstantPool) {
 	this.classNameIdx = reader.readUInt16()
 }
 
-func (this *ConstantClassInfo) getClassName() string {
+func (this *ConstantClassInfo) GetClassName() string {
 	return this.pool.getUtf8(this.classNameIdx)
 }

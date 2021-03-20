@@ -1,20 +1,18 @@
 package main
 
 import (
-	"./classfile"
+	"./methodarea"
 	"fmt"
+	"reflect"
 )
 import "./instruction/base"
 import "./instruction"
 import "./rt"
 
-func Interpret(method *classfile.MemberInfo) {
-	for _, attr := range method.Attributes {
-		codeAttribute := attr.(*classfile.CodeAttribute)
-		reader := base.NewBytecodeReader(0, codeAttribute.GetCode())
-		frame := rt.NewStackFrame(rt.NewLocalVarTable(codeAttribute.MaxLocals), rt.NewOperateStack(codeAttribute.MaxStack))
-		Loop(reader, frame)
-	}
+func Interpret(method *methodarea.Method) {
+	reader := base.NewBytecodeReader(0, method.Code)
+	frame := rt.NewStackFrame(rt.NewLocalVarTable(method.MaxLocals), rt.NewOperateStack(method.MaxStack), method)
+	Loop(reader, frame)
 }
 
 func Loop(reader *base.BytecodeReader, frame *rt.StackFrame) {
@@ -26,6 +24,8 @@ func Loop(reader *base.BytecodeReader, frame *rt.StackFrame) {
 		instr = instruction.NewInstruction(instructionCode)
 
 		_, ok := instr.(*base.NopInstruction)
+
+		fmt.Println(reflect.TypeOf(instr))
 
 		if ok {
 			fmt.Println("table = ", frame.LocalVarTable)

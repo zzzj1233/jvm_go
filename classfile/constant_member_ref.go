@@ -25,7 +25,7 @@ func (this *ConstantMemberInfo) readInfo(reader *ClassReader, cp ConstantPool) {
 }
 
 func (this *ConstantMemberInfo) GetClassName() string {
-	return this.pool.getClassInfo(this.classIndex).getClassName()
+	return this.pool.GetClassInfo(this.classIndex).GetClassName()
 }
 
 func (this *ConstantMemberInfo) GetNameAndType() (string, string) {

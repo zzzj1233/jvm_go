@@ -30,13 +30,13 @@ func newMethods(cf *classfile.ClassFile, class *Class) []*Method {
 	methods := make([]*Method, len(cf.Methods))
 
 	for i, method := range cf.Methods {
-		methods[i] = newMethod(method, class)
+		methods[i] = newMethod(method, class, cf.Pool)
 	}
 
 	return methods
 }
 
-func newMethod(memberInfo *classfile.MemberInfo, class *Class) *Method {
+func newMethod(memberInfo *classfile.MemberInfo, class *Class, pool classfile.ConstantPool) *Method {
 
 	var maxStack uint16
 	var maxLocals uint16
@@ -60,17 +60,19 @@ func newMethod(memberInfo *classfile.MemberInfo, class *Class) *Method {
 			Descriptor: memberInfo.GetDesc(),
 			Class:      class,
 		},
-		flag:      newMethodFlag(int(memberInfo.AccessFlag)),
-		maxStack:  maxStack,
-		maxLocals: maxLocals,
-		code:      code,
+		Flag:      newMethodFlag(int(memberInfo.AccessFlag)),
+		MaxStack:  maxStack,
+		MaxLocals: maxLocals,
+		Code:      code,
+		Pool:      pool,
 	}
 }
 
 type Method struct {
 	ClassMember
-	flag      *MethodFlag
-	maxStack  uint16
-	maxLocals uint16
-	code      []byte
+	Flag      *MethodFlag
+	MaxStack  uint16
+	MaxLocals uint16
+	Code      []byte
+	Pool      classfile.ConstantPool
 }

@@ -9,6 +9,14 @@ type Slot struct {
 	obj    *Object
 }
 
+func (this *Slot) GetNumber() int32 {
+	return this.number
+}
+
+func (this *Slot) GetObj() *Object {
+	return this.obj
+}
+
 func NewLocalVarTable(size uint16) LocalVarTable {
 	return make([]Slot, size)
 }

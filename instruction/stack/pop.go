@@ -1,4 +1,4 @@
-package pop
+package stack
 
 import "../base"
 import "../../rt"
