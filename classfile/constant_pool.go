@@ -22,6 +22,10 @@ func (this ConstantPool) GetFieldRef(idx uint16) *ConstantFieldRefInfo {
 	return this[idx-1].(*ConstantFieldRefInfo)
 }
 
+func (this ConstantPool) GetMethodRef(idx uint16) *ConstantMethodRefInfo {
+	return this[idx-1].(*ConstantMethodRefInfo)
+}
+
 func readConstantPool(reader *ClassReader) ConstantPool {
 	poolSize := reader.readUInt16()
 

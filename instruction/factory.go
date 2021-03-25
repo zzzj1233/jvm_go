@@ -9,6 +9,7 @@ import "./dup"
 import "./math"
 import "./stack"
 import "./object"
+import "./method"
 
 func NewInstruction(instructionCode uint8) base.Instruction {
 	switch instructionCode {
@@ -326,8 +327,6 @@ func NewInstruction(instructionCode uint8) base.Instruction {
 		return &object.GetField{}
 	case 0xb5:
 		return &object.PutField{}
-	case 0xb7:
-		return &object.InvokeSpecial{}
 	case 0xc1:
 		return &object.Instanceof{}
 	case 0xc0:
@@ -338,6 +337,8 @@ func NewInstruction(instructionCode uint8) base.Instruction {
 		return &stack.LdcW{}
 	case 0x14:
 		return &stack.Ldc2W{}
+	case 0xb7:
+		return &method.InvokeSpecial{}
 	}
 	return &base.NopInstruction{}
 }

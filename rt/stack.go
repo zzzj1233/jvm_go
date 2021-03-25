@@ -24,7 +24,7 @@ func (this *Stack) pushFrame(frame *StackFrame) {
 
 func (this *Stack) popFrame() *StackFrame {
 	if this.size == 0 {
-		panic("java stack is empty !")
+		panic("java Stack is empty !")
 	}
 	this.size--
 	top := this.top

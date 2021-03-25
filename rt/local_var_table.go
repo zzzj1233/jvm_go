@@ -64,3 +64,7 @@ func (this LocalVarTable) PutRef(index int, object *Object) {
 func (this LocalVarTable) GetRef(index int) *Object {
 	return this[index].obj
 }
+
+func (this LocalVarTable) SetSlot(index int, slot Slot) {
+	this[index] = slot
+}

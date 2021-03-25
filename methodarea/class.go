@@ -131,6 +131,10 @@ func (this *Class) IsAssignableFrom(other *Class) bool {
 	return false
 }
 
+func (this *Class) GetMethods() []*Method {
+	return this.methods
+}
+
 func (this *Class) AccessStaticField(visitor *Class, name string) *Attribute {
 	attribute := this.StaticAttributes[name]
 

@@ -12,5 +12,5 @@ func (this *BranchInstruction) FetchOperands(reader *BytecodeReader) {
 
 func (this *BranchInstruction) MatchCondition(frame *rt.StackFrame) {
 	// 减去一个指令 + 两个操作数的长度
-	frame.NextPc = int(this.Offset) - 3
+	frame.NextPc = uint(this.Offset) - 3
 }

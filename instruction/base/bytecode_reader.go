@@ -12,6 +12,11 @@ func NewBytecodeReader(pc uint, code []byte) *BytecodeReader {
 	}
 }
 
+func (this *BytecodeReader) Reset(pc uint, code []byte) {
+	this.pc = pc
+	this.code = code
+}
+
 func (this *BytecodeReader) ReadUInt8() uint8 {
 	operands := this.code[this.pc]
 	this.pc++
@@ -50,4 +55,8 @@ func (this *BytecodeReader) ReadInt32() int32 {
 
 func (this *BytecodeReader) SetNextPc(pc uint) {
 	this.pc += pc
+}
+
+func (this *BytecodeReader) GetPc() uint {
+	return this.pc
 }

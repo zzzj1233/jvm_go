@@ -8,6 +8,7 @@ type MethodFlag struct {
 	*ClassMemberFlag
 	synchronized bool
 	native       bool
+	abstract     bool
 }
 
 func (this *MethodFlag) IsSynchronized() bool {
@@ -23,6 +24,7 @@ func newMethodFlag(flag int) *MethodFlag {
 		ClassMemberFlag: newClassMemberFlag(flag),
 		synchronized:    flag&0x0020 != 0,
 		native:          flag&0x0100 != 0,
+		abstract:        flag&0x0400 != 0,
 	}
 }
 
@@ -66,6 +68,18 @@ func newMethod(memberInfo *classfile.MemberInfo, class *Class, pool classfile.Co
 		Code:      code,
 		Pool:      pool,
 	}
+}
+
+func (this *Method) ArgSlotCount() int {
+	var count int
+	// 非static方法,localVarTable第一个变量是this
+	if !this.Flag.IsStatic() {
+		count += 1
+	}
+
+	// 解析descriptor
+
+	return count
 }
 
 type Method struct {

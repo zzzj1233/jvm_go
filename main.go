@@ -4,6 +4,7 @@ import (
 	"./classpath"
 	"./context"
 	"./methodarea"
+	"./rt"
 )
 
 func main() {
@@ -26,7 +27,9 @@ func startJvm(c *Cmd) {
 
 	class := context.Loader.LoadClass(c.classname)
 
+	thread := rt.NewThread("main")
+
 	method := class.GetMainMethod()
 
-	Interpret(method)
+	Interpret(method, thread)
 }

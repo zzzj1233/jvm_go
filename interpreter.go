@@ -9,16 +9,21 @@ import "./instruction/base"
 import "./instruction"
 import "./rt"
 
-func Interpret(method *methodarea.Method) {
+func Interpret(method *methodarea.Method, thread *rt.Thread) {
 	reader := base.NewBytecodeReader(0, method.Code)
-	frame := rt.NewStackFrame(rt.NewLocalVarTable(method.MaxLocals), rt.NewOperateStack(method.MaxStack), method)
-	Loop(reader, frame)
+	frame := rt.NewStackFrame(rt.NewLocalVarTable(method.MaxLocals), rt.NewOperateStack(method.MaxStack), method, thread)
+	thread.Stack.PushFrame(frame)
+	Loop(reader, thread)
 }
 
-func Loop(reader *base.BytecodeReader, frame *rt.StackFrame) {
+func Loop(reader *base.BytecodeReader, thread *rt.Thread) {
 	var instr base.Instruction
 
 	for {
+		frame := thread.Stack.TopFrame()
+
+		reader.Reset(frame.NextPc, frame.Method.Code)
+
 		instructionCode := reader.ReadUInt8()
 
 		instr = instruction.NewInstruction(instructionCode)
@@ -35,12 +40,9 @@ func Loop(reader *base.BytecodeReader, frame *rt.StackFrame) {
 
 		instr.FetchOperands(reader)
 
-		instr.Execute(frame)
+		frame.NextPc = reader.GetPc()
 
-		if frame.NextPc != 0 {
-			reader.SetNextPc(uint(frame.NextPc))
-			frame.NextPc = 0
-		}
+		instr.Execute(frame)
 	}
 
 }
